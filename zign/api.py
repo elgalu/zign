@@ -150,13 +150,13 @@ def perform_implicit_flow(config: dict):
 
     # Get new token
     success = False
-    # Must match redirect URIs in client configuration (http://localhost:8081-8181)
+    # Must match redirect URIs in client configuration (https://<some-server>:8081-8181)
     port_number = 8081
     max_port_number = port_number + 100
 
     while True:
         try:
-            httpd = ClientRedirectServer(('127.0.0.1', port_number))
+            httpd = ClientRedirectServer(('0.0.0.0', port_number))
         except socket.error as e:
             if port_number > max_port_number:
                 success = False
@@ -170,7 +170,7 @@ def perform_implicit_flow(config: dict):
         params = {'response_type':          'token',
                   'business_partner_id':    config['business_partner_id'],
                   'client_id':              config['client_id'],
-                  'redirect_uri':           'http://localhost:{}'.format(port_number)}
+                  'redirect_uri':           'https://{}:{}'.format(os.environ['CUSTOM_HOST'], port_number)}
 
         param_list = ['{}={}'.format(key, value) for key, value in sorted(params.items())]
         param_string = '&'.join(param_list)

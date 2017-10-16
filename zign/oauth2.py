@@ -52,7 +52,7 @@ EXTRACT_TOKEN_PAGE = '''<!DOCTYPE HTML>
             var query = window.location.hash.substring(1);
             var params = parseQueryString(query);
             if (params.access_token) {{
-                window.location.href = "http://localhost:{port}/?" + query;
+                window.location.href = "https://{custom_host}:{port}/?" + query;
             }} else {{
                 displayError("Error: No access_token in URL.")
             }}
@@ -94,7 +94,7 @@ class ClientRedirectHandler(BaseHTTPRequestHandler):
         query_string = urlparse(self.path).query
 
         if not query_string:
-            self.wfile.write(EXTRACT_TOKEN_PAGE.format(port=self.server.server_port).encode('utf-8'))
+            self.wfile.write(EXTRACT_TOKEN_PAGE.format(port=self.server.server_port, custom_host=os.environ['CUSTOM_HOST']).encode('utf-8'))
         else:
             query_params = {}
             for key, val in parse_qs(query_string).items():
