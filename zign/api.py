@@ -151,7 +151,7 @@ def perform_implicit_flow(config: dict):
     # Get new token
     success = False
     # Must match redirect URIs in client configuration (https://<some-server>:8282-8382)
-    port_number = 8282
+    port_number = int(os.environ['IMPLICIT_FLOW_PORT'])
     max_port_number = port_number + 100
 
     while True:
@@ -170,7 +170,7 @@ def perform_implicit_flow(config: dict):
         params = {'response_type':          'token',
                   'business_partner_id':    config['business_partner_id'],
                   'client_id':              config['client_id'],
-                  'redirect_uri':           'https://{}:{}'.format(os.environ['CUSTOM_HOST'], port_number)}
+                  'redirect_uri':           'https://{}:{}'.format(os.environ['IMPLICIT_FLOW_HOST'], port_number)}
 
         param_list = ['{}={}'.format(key, value) for key, value in sorted(params.items())]
         param_string = '&'.join(param_list)

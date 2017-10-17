@@ -94,7 +94,9 @@ class ClientRedirectHandler(BaseHTTPRequestHandler):
         query_string = urlparse(self.path).query
 
         if not query_string:
-            self.wfile.write(EXTRACT_TOKEN_PAGE.format(port=self.server.server_port, custom_host=os.environ['CUSTOM_HOST']).encode('utf-8'))
+            implicit_flow_ingress_port = int(os.environ['IMPLICIT_FLOW_INGRESS_PORT'])
+            custom_host = os.environ['IMPLICIT_FLOW_HOST']
+            self.wfile.write(EXTRACT_TOKEN_PAGE.format(port=implicit_flow_ingress_port, custom_host=custom_host).encode('utf-8'))
         else:
             query_params = {}
             for key, val in parse_qs(query_string).items():
