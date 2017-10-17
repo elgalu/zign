@@ -121,7 +121,7 @@ def test_token_implicit_flow(monkeypatch):
     access_token = 'myacctok'
 
     def webbrowser_open(url, **kwargs):
-        assert url == 'https://localhost/authorize?business_partner_id=123&client_id=foobar&redirect_uri=http://localhost:8081&response_type=token'
+        assert url == 'https://localhost/authorize?business_partner_id=123&client_id=foobar&redirect_uri=http://localhost:8282&response_type=token'
 
     server = MagicMock()
     server.return_value.query_params = {'access_token': access_token, 'refresh_token': 'foo', 'expires_in': 3600, 'token_type': 'Bearer'}

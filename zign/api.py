@@ -150,8 +150,8 @@ def perform_implicit_flow(config: dict):
 
     # Get new token
     success = False
-    # Must match redirect URIs in client configuration (https://<some-server>:8081-8181)
-    port_number = 8081
+    # Must match redirect URIs in client configuration (https://<some-server>:8282-8382)
+    port_number = 8282
     max_port_number = port_number + 100
 
     while True:
